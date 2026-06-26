@@ -11,45 +11,58 @@ import {
 } from './Collection'
 import { SettingsPage } from './Preferences'
 
+import ProtectedRoute from './Common/ui/components/ProtectedRoute'
+import ShellLayout from './Common/ui/components/ShellLayout'
+
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-  },
   {
     path: '/login',
     element: <LoginPage />,
   },
+
   {
-    path: '/search',
-    element: <SearchPage />,
-  },
-  {
-    path: '/movie/:id',
-    element: <MovieDetailPage />,
-  },
-  {
-    path: '/tv/:id',
-    element: <TVShowDetailPage />,
-  },
-  {
-    path: '/tv/:id/season/:seasonNumber',
-    element: <SeasonDetailPage />,
-  },
-  {
-    path: '/watchlist',
-    element: <WatchlistPage />,
-  },
-  {
-    path: '/collections',
-    element: <CollectionsPage />,
-  },
-  {
-    path: '/collections/:id',
-    element: <CollectionDetailPage />,
-  },
-  {
-    path: '/settings',
-    element: <SettingsPage />,
+    element: (
+      <ProtectedRoute>
+        <ShellLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: '/search',
+        element: <SearchPage />,
+      },
+      {
+        path: '/movie/:id',
+        element: <MovieDetailPage />,
+      },
+      {
+        path: '/tv/:id',
+        element: <TVShowDetailPage />,
+      },
+      {
+        path: '/tv/:id/season/:seasonNumber',
+        element: <SeasonDetailPage />,
+      },
+      {
+        path: '/watchlist',
+        element: <WatchlistPage />,
+      },
+      {
+        path: '/collections',
+        element: <CollectionsPage />,
+      },
+      {
+        path: '/collections/:id',
+        element: <CollectionDetailPage />,
+      },
+      {
+        path: '/settings',
+        element: <SettingsPage />,
+      },
+    ],
   },
 ])
