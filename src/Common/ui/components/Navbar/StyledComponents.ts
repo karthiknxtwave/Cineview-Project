@@ -68,7 +68,7 @@ export const RightSection = styled.div`
 `
 
 export const SearchInput = styled.input`
-  width: 220px;
+  width: 280px;
 
   height: 40px;
 

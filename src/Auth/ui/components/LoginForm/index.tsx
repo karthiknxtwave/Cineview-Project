@@ -33,12 +33,6 @@ const handleSubmit = (event: SubmitEvent) => {
       password: '',
     }
 
-    console.log({
-      username,
-      password,
-      VALID_USERNAME,
-      VALID_PASSWORD,
-    })
     if (!username.trim()) {
       newErrors.username = 'Username is required'
     }
@@ -62,7 +56,6 @@ const handleSubmit = (event: SubmitEvent) => {
           username,
           isLoggedIn: true,
         })
-        console.log('Login Successful')
         navigate(from, { replace: true })
       } else {
         setLoginError('Invalid username or password')

@@ -5,6 +5,6 @@ import App from './App'
 describe('App', () => {
   it('renders app', () => {
     render(<App />)
-    expect(screen.getByText(/home/i)).toBeInTheDocument()
+    expect(screen.getByText(/sign in to continue/i)).toBeInTheDocument()
   })
 })

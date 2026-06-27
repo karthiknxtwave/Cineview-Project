@@ -3,3 +3,22 @@ dist
 .vscode
 *.log
 .DS_Store
+.env
+_planning/
+.cursor
+Project Guidelines.md
+Project Specification.md
+Sample Planning Document.md
+Clean Code Guidelines.md
+
+# Env overrides (keep .env.example tracked)
+.env.local
+.env.*.local
+
+# Test / tooling artifacts
+coverage/
+*.tsbuildinfo
+
+# OS / editor
+Thumbs.db
+.idea/

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
-import { getSession } from '../../../../Auth/core/utils/Session.utils'
+import { getSession } from '../../../core/utils/Session.utils'
 
 interface ProtectedRouteProps {
   children: ReactNode

@@ -11,8 +11,8 @@ import {
 } from './Collection'
 import { SettingsPage } from './Preferences'
 
-import ProtectedRoute from './Common/ui/components/ProtectedRoute'
-import ShellLayout from './Common/ui/components/ShellLayout'
+import { ProtectedRoute } from './Common'
+import { SearchShellLayout } from './Search'
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
   {
     element: (
       <ProtectedRoute>
-        <ShellLayout />
+        <SearchShellLayout />
       </ProtectedRoute>
     ),
     children: [
@@ -42,10 +42,12 @@ export const router = createBrowserRouter([
       {
         path: '/tv/:id',
         element: <TVShowDetailPage />,
-      },
-      {
-        path: '/tv/:id/season/:seasonNumber',
-        element: <SeasonDetailPage />,
+        children: [
+          {
+            path: 'season/:seasonNumber',
+            element: <SeasonDetailPage />,
+          },
+        ],
       },
       {
         path: '/watchlist',
