@@ -1,0 +1,52 @@
+{
+  "watchlist": {
+    "page": {
+      "title": "My Watchlist"
+    },
+    "status": {
+      "want_to_watch": "Want to Watch",
+      "watching": "Watching",
+      "completed": "Completed"
+    },
+    "filter": {
+      "all": "All",
+      "want_to_watch": "Want to Watch",
+      "watching": "Watching",
+      "completed": "Completed",
+      "ariaLabel": "Watchlist filters",
+      "itemCount": "{{count}} items"
+    },
+    "sort": {
+      "label": "Sort by",
+      "ariaLabel": "Sort watchlist",
+      "date_added": "Date Added",
+      "rating": "Rating",
+      "title": "Title"
+    },
+    "empty": {
+      "title": "Your watchlist is empty",
+      "description": "Save movies and TV shows you want to watch. They will appear here.",
+      "filteredTitle": "No titles match this filter",
+      "filteredDescription": "Try another status tab or add more items to your watchlist.",
+      "browseLink": "Browse movies"
+    },
+    "actions": {
+      "add": "Add to Watchlist",
+      "remove": "Remove from Watchlist",
+      "addAriaLabel": "Add to watchlist",
+      "removeAriaLabel": "Remove from watchlist",
+      "removeFromCard": "Remove {{title}} from watchlist"
+    },
+    "card": {
+      "statusLabel": "Status",
+      "statusAriaLabel": "Status for {{title}}"
+    },
+    "navbar": {
+      "label": "Watchlist",
+      "badgeAriaLabel": "{{count}} items in watchlist"
+    },
+    "statusSelect": {
+      "ariaLabel": "Watchlist status"
+    }
+  }
+}

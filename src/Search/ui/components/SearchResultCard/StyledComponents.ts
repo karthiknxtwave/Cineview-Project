@@ -7,6 +7,34 @@ export const CardContainer = styled.div`
   color: inherit;
 `;
 
+export const WatchlistButton = styled.button<{ $active: boolean }>`
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: ${({ $active, theme }) =>
+    $active ? theme.colors.primary : theme.colors.overlay};
+  color: ${({ theme }) => theme.colors.textInverse};
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
+`;
+
 export const CardLink = styled(Link)`
   position: relative;
   flex: 0 0 160px;

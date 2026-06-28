@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useObserver } from 'mobx-react-lite'
 
 import { ErrorBoundary, IMAGE, type TmdbLocaleParams } from '../../../Common'
+import {
+  createMovieWatchlistSnapshot,
+  useWatchlistController,
+} from '../../../Collection'
 import { usePreferenceChangeEffect } from '../../../Preferences'
 import {
   MovieDetailStoreProvider,
@@ -13,6 +19,7 @@ import { useMovieDetailController } from '../controllers/useMovieDetailControlle
 import * as S from './MovieDetailStyledComponents.ts'
 
 const MovieDetailPageContent = () => {
+  const { t } = useTranslation('collection')
   const { id } = useParams()
   const movieId = Number(id)
   const store = useMovieDetailStore()
@@ -30,6 +37,22 @@ const MovieDetailPageContent = () => {
     videosStatus,
     actions,
   } = useMovieDetailController()
+  const { isInWatchlist, toggle } = useWatchlistController()
+  const isMovieInWatchlist = useObserver(() =>
+    isInWatchlist('movie', movieId),
+  )
+
+  const handleToggleWatchlist = () => {
+    if (!movie) {
+      return
+    }
+
+    toggle({
+      mediaType: 'movie',
+      mediaId: movie.id,
+      snapshot: createMovieWatchlistSnapshot(movie),
+    })
+  }
 
   const handleOpenTrailer = () => {
     setIsTrailerOpen(true)
@@ -142,8 +165,14 @@ const MovieDetailPageContent = () => {
           </S.Genres>
           <S.Overview>{movie.overview}</S.Overview>
           <S.Actions>
-            <S.WatchlistButton type="button" onClick={() => undefined}>
-              Add to Watchlist
+            <S.WatchlistButton
+              type="button"
+              $active={isMovieInWatchlist}
+              onClick={handleToggleWatchlist}
+            >
+              {isMovieInWatchlist
+                ? t('watchlist.actions.remove')
+                : t('watchlist.actions.add')}
             </S.WatchlistButton>
             <S.TrailerButton type="button" onClick={handleOpenTrailer}>
               Watch Trailer

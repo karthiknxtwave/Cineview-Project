@@ -1,0 +1,52 @@
+{
+  "watchlist": {
+    "page": {
+      "title": "Mi lista"
+    },
+    "status": {
+      "want_to_watch": "Quiero ver",
+      "watching": "Viendo",
+      "completed": "Completado"
+    },
+    "filter": {
+      "all": "Todos",
+      "want_to_watch": "Quiero ver",
+      "watching": "Viendo",
+      "completed": "Completado",
+      "ariaLabel": "Filtros de la lista",
+      "itemCount": "{{count}} títulos"
+    },
+    "sort": {
+      "label": "Ordenar por",
+      "ariaLabel": "Ordenar lista",
+      "date_added": "Fecha añadida",
+      "rating": "Valoración",
+      "title": "Título"
+    },
+    "empty": {
+      "title": "Tu lista está vacía",
+      "description": "Guarda películas y series que quieras ver. Aparecerán aquí.",
+      "filteredTitle": "Ningún título coincide con este filtro",
+      "filteredDescription": "Prueba otra pestaña de estado o añade más títulos a tu lista.",
+      "browseLink": "Explorar películas"
+    },
+    "actions": {
+      "add": "Añadir a la lista",
+      "remove": "Quitar de la lista",
+      "addAriaLabel": "Añadir a la lista",
+      "removeAriaLabel": "Quitar de la lista",
+      "removeFromCard": "Quitar {{title}} de la lista"
+    },
+    "card": {
+      "statusLabel": "Estado",
+      "statusAriaLabel": "Estado de {{title}}"
+    },
+    "navbar": {
+      "label": "Lista",
+      "badgeAriaLabel": "{{count}} títulos en la lista"
+    },
+    "statusSelect": {
+      "ariaLabel": "Estado de la lista"
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { useObserver } from "mobx-react-lite"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 
 import { resolveTheme } from "./Common"
+import { WatchlistStoreProvider, useWatchlistStore } from "./Collection/data/providers"
 import {
   PreferencesStoreProvider,
   usePreferencesStore,
@@ -36,7 +37,8 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function AppProvidersContent({ children }: AppProvidersProps) {
-  const store = usePreferencesStore()
+  const preferencesStore = usePreferencesStore()
+  const watchlistStore = useWatchlistStore()
   const initializedRef = useRef(false)
 
   useEffect(() => {
@@ -44,16 +46,17 @@ function AppProvidersContent({ children }: AppProvidersProps) {
       return
     }
 
-    store.initialize()
-    initI18n(store.language)
+    preferencesStore.initialize()
+    watchlistStore.initialize()
+    initI18n(preferencesStore.language)
     initializedRef.current = true
-  }, [store])
+  }, [preferencesStore, watchlistStore])
 
   useEffect(() => {
     document.title = "CineView"
-  }, [store.language])
+  }, [preferencesStore.language])
 
-  const theme = useObserver(() => resolveTheme(store.theme))
+  const theme = useObserver(() => resolveTheme(preferencesStore.theme))
 
   return (
     <I18nextProvider i18n={i18n}>
@@ -68,7 +71,9 @@ function AppProvidersContent({ children }: AppProvidersProps) {
 export function AppProviders({ children }: AppProvidersProps) {
   return (
     <PreferencesStoreProvider>
-      <AppProvidersContent>{children}</AppProvidersContent>
+      <WatchlistStoreProvider>
+        <AppProvidersContent>{children}</AppProvidersContent>
+      </WatchlistStoreProvider>
     </PreferencesStoreProvider>
   )
 }

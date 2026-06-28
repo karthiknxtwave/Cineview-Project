@@ -1,5 +1,10 @@
 import { useTranslation } from 'react-i18next'
+import { useObserver } from 'mobx-react-lite'
 
+import {
+  createMovieWatchlistSnapshot,
+  useWatchlistController,
+} from '../../../../Collection'
 import type { MovieSummary } from '../../../core/types/Movie.types'
 import { MovieCard } from '../MovieCard'
 import * as S from './StyledComponents'
@@ -14,6 +19,32 @@ interface ContentRowProps {
 }
 
 const SKELETON_COUNT = 6
+
+interface ContentRowMovieCardProps {
+  movie: MovieSummary
+}
+
+const ContentRowMovieCard = ({ movie }: ContentRowMovieCardProps) => {
+  const { isInWatchlist, toggle } = useWatchlistController()
+
+  const inWatchlist = useObserver(() => isInWatchlist('movie', movie.id))
+
+  const handleToggleWatchlist = () => {
+    toggle({
+      mediaType: 'movie',
+      mediaId: movie.id,
+      snapshot: createMovieWatchlistSnapshot(movie),
+    })
+  }
+
+  return (
+    <MovieCard
+      movie={movie}
+      isInWatchlist={inWatchlist}
+      onToggleWatchlist={handleToggleWatchlist}
+    />
+  )
+}
 
 export const ContentRow = ({
   title,
@@ -65,12 +96,7 @@ export const ContentRow = ({
               <S.SkeletonCard key={index} />
             ))
           : movies.map(movie => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                isInWatchlist={false}
-                onToggleWatchlist={() => undefined}
-              />
+              <ContentRowMovieCard key={movie.id} movie={movie} />
             ))}
       </S.Row>
     </S.Section>

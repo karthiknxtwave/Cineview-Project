@@ -4,14 +4,21 @@ import { initReactI18next } from "react-i18next"
 import { SUPPORTED_LANGUAGES } from "../../core/constants/Preferences.constants"
 import type { AppLanguage } from "../../core/types/Preferences.types"
 
+import enCollection from "./locales/en/collection.json"
 import enMovies from "./locales/en/movies.json"
 import enPreferences from "./locales/en/preferences.json"
 import enSearch from "./locales/en/search.json"
+import esCollection from "./locales/es/collection.json"
 import esMovies from "./locales/es/movies.json"
 import esPreferences from "./locales/es/preferences.json"
 import esSearch from "./locales/es/search.json"
 
-export const I18N_NAMESPACES = ["movies", "search", "preferences"] as const
+export const I18N_NAMESPACES = [
+  "movies",
+  "search",
+  "preferences",
+  "collection",
+] as const
 
 export type I18nNamespace = (typeof I18N_NAMESPACES)[number]
 
@@ -20,11 +27,13 @@ const resources = {
     movies: enMovies,
     search: enSearch,
     preferences: enPreferences,
+    collection: enCollection,
   },
   es: {
     movies: esMovies,
     search: esSearch,
     preferences: esPreferences,
+    collection: esCollection,
   },
 } as const
 

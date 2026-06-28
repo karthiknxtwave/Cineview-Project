@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Navbar } from "../../../Common";
+import { useWatchlistController } from "../../../Collection";
 import { usePreferencesController } from "../../../Preferences";
 import { SearchProvider } from "../../data/providers";
 import { useSearchController } from "../controllers/useSearchController";
@@ -12,6 +13,7 @@ const SearchNavbar = () => {
   const { query, actions } = useSearchController();
   const { language, supportedLanguages, setLanguage } =
     usePreferencesController();
+  const { totalCount } = useWatchlistController();
 
   const handleSearchChange = (value: string) => {
     actions.setQuery(value);
@@ -28,6 +30,7 @@ const SearchNavbar = () => {
       selectedLanguage={language}
       languageOptions={supportedLanguages}
       onLanguageChange={value => setLanguage(value as typeof language)}
+      watchlistCount={totalCount}
     />
   );
 };

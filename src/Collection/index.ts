@@ -1,3 +1,8 @@
 export { WatchlistPage } from './ui/pages/WatchlistPage'
 export { CollectionsPage } from './ui/pages/CollectionsPage'
 export { CollectionDetailPage } from './ui/pages/CollectionDetailPage'
+export { useWatchlistController } from './ui/controllers/useWatchlistController'
+export { useWatchlistPageController } from './ui/controllers/useWatchlistPageController'
+export { createMovieWatchlistSnapshot, createSearchResultWatchlistSnapshot, createTvShowWatchlistSnapshot } from './core/utils/WatchlistSnapshot.utils'
+export type { WatchlistController } from './ui/controllers/useWatchlistController'
+export type { WatchlistPageController } from './ui/controllers/useWatchlistPageController'

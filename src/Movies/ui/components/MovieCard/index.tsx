@@ -1,4 +1,5 @@
 import type { MouseEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { IMAGE } from '../../../../Common'
 import type { MovieSummary } from '../../../core/types/Movie.types'
@@ -21,6 +22,7 @@ export const MovieCard = ({
   isInWatchlist = false,
   onToggleWatchlist,
 }: MovieCardProps) => {
+  const { t } = useTranslation('collection')
   const posterUrl = getPosterUrl(movie.poster_path)
 
   const handleToggleWatchlist = (
@@ -35,7 +37,11 @@ export const MovieCard = ({
     <S.Card>
       <S.WatchlistButton
         type="button"
-        aria-label={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
+        aria-label={
+          isInWatchlist
+            ? t('watchlist.actions.removeAriaLabel')
+            : t('watchlist.actions.addAriaLabel')
+        }
         aria-pressed={isInWatchlist}
         $active={isInWatchlist}
         onClick={handleToggleWatchlist}

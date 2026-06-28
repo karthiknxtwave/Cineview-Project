@@ -1,6 +1,12 @@
+import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { useObserver } from "mobx-react-lite";
 
 import { formatDisplayYear, IMAGE } from "../../../../Common";
+import {
+  createSearchResultWatchlistSnapshot,
+  useWatchlistController,
+} from "../../../../Collection";
 import type { SearchResult } from "../../../core/types";
 import * as S from "./StyledComponents";
 
@@ -38,10 +44,40 @@ const getImagePath = (result: SearchResult) => {
 };
 
 export const SearchResultCard = ({ result }: SearchResultCardProps) => {
-  const { t, i18n } = useTranslation("search");
+  const { t, i18n } = useTranslation(["search", "collection"]);
+  const { isInWatchlist, toggle } = useWatchlistController();
   const posterUrl = getPosterUrl(getImagePath(result));
   const title = getTitle(result);
   const route = getRoute(result);
+  const isWatchable = result.media_type !== "person";
+  const mediaType = result.media_type === "movie" ? "movie" : "tv";
+  const inWatchlist = useObserver(() =>
+    isWatchable ? isInWatchlist(mediaType, result.id) : false,
+  );
+
+  const handleToggleWatchlist = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!isWatchable) {
+      return;
+    }
+
+    if (result.media_type === "movie") {
+      toggle({
+        mediaType: "movie",
+        mediaId: result.id,
+        snapshot: createSearchResultWatchlistSnapshot(result),
+      });
+      return;
+    }
+
+    toggle({
+      mediaType: "tv",
+      mediaId: result.id,
+      snapshot: createSearchResultWatchlistSnapshot(result),
+    });
+  };
 
   const meta =
     result.media_type === "person"
@@ -57,6 +93,21 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 
   const content = (
     <>
+      {isWatchable && (
+        <S.WatchlistButton
+          type="button"
+          aria-label={
+            inWatchlist
+              ? t("collection:watchlist.actions.removeAriaLabel")
+              : t("collection:watchlist.actions.addAriaLabel")
+          }
+          aria-pressed={inWatchlist}
+          $active={inWatchlist}
+          onClick={handleToggleWatchlist}
+        >
+          {inWatchlist ? "✓" : "+"}
+        </S.WatchlistButton>
+      )}
       <S.Poster $src={posterUrl} role="img" aria-label={title} />
       <S.Title>{title}</S.Title>
       <S.Meta>{meta}</S.Meta>

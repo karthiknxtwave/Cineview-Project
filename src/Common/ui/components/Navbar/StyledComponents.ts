@@ -61,6 +61,27 @@ export const StyledNavLink = styled(NavLink)`
   }
 `
 
+export const WatchlistNavLink = styled(StyledNavLink)`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+`
+
+export const WatchlistBadge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+`
+
 export const RightSection = styled.div`
   display: flex;
   align-items: center;

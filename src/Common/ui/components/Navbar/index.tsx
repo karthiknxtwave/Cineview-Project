@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { clearSession } from '../../../core/utils/Session.utils'
@@ -16,6 +17,7 @@ interface NavbarProps {
   selectedLanguage?: string
   languageOptions?: readonly LanguageOption[]
   onLanguageChange?: (language: string) => void
+  watchlistCount?: number
 }
 
 const Navbar = ({
@@ -25,7 +27,9 @@ const Navbar = ({
   selectedLanguage,
   languageOptions = [],
   onLanguageChange,
+  watchlistCount = 0,
 }: NavbarProps) => {
+  const { t } = useTranslation('collection')
   const navigate = useNavigate()
   const isLanguageSwitcherEnabled =
     Boolean(onLanguageChange) && languageOptions.length > 0
@@ -43,7 +47,18 @@ const Navbar = ({
         <S.NavLinks>
           <S.StyledNavLink to="/">Home</S.StyledNavLink>
           <S.StyledNavLink to="/search">Search</S.StyledNavLink>
-          <S.StyledNavLink to="/watchlist">Watchlist</S.StyledNavLink>
+          <S.WatchlistNavLink to="/watchlist">
+            {t('watchlist.navbar.label')}
+            {watchlistCount > 0 && (
+              <S.WatchlistBadge
+                aria-label={t('watchlist.navbar.badgeAriaLabel', {
+                  count: watchlistCount,
+                })}
+              >
+                {watchlistCount}
+              </S.WatchlistBadge>
+            )}
+          </S.WatchlistNavLink>
           <S.StyledNavLink to="/collections">Collections</S.StyledNavLink>
           <S.StyledNavLink to="/settings">Settings</S.StyledNavLink>
         </S.NavLinks>

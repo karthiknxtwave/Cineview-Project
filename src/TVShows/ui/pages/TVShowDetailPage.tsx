@@ -1,16 +1,24 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { Outlet, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useObserver } from "mobx-react-lite";
 
 import { ErrorBoundary, IMAGE, type TmdbLocaleParams } from "../../../Common";
+import {
+  createTvShowWatchlistSnapshot,
+  useWatchlistController,
+} from "../../../Collection";
 import { usePreferenceChangeEffect } from "../../../Preferences";
 import { TVShowDetailStoreProvider, useTVShowDetailStore } from "../../data/providers";
 import * as S from "./StyledComponents";
 
 const TVShowDetailContent = () => {
+  const { t } = useTranslation("collection");
   const { id } = useParams();
   const showId = Number(id);
   const store = useTVShowDetailStore();
+  const { isInWatchlist, toggle } = useWatchlistController();
+  const isShowInWatchlist = useObserver(() => isInWatchlist("tv", showId));
 
   const actions = useMemo(
     () => ({
@@ -87,6 +95,14 @@ const TVShowDetailContent = () => {
     ? `${IMAGE.ORIGINAL}${show.backdrop_path}`
     : undefined;
 
+  const handleToggleWatchlist = () => {
+    toggle({
+      mediaType: "tv",
+      mediaId: show.id,
+      snapshot: createTvShowWatchlistSnapshot(show),
+    });
+  };
+
   return (
     <S.Page>
       <S.Hero $src={backdropUrl}>
@@ -96,8 +112,14 @@ const TVShowDetailContent = () => {
           {show.number_of_seasons} seasons
         </S.Meta>
         <S.Overview>{show.overview}</S.Overview>
-        <S.WatchlistButton type="button" onClick={() => undefined}>
-          Add to Watchlist
+        <S.WatchlistButton
+          type="button"
+          $active={isShowInWatchlist}
+          onClick={handleToggleWatchlist}
+        >
+          {isShowInWatchlist
+            ? t("watchlist.actions.remove")
+            : t("watchlist.actions.add")}
         </S.WatchlistButton>
       </S.Hero>
 

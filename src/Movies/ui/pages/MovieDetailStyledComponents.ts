@@ -107,16 +107,31 @@ export const Actions = styled.div`
   gap: 12px;
 `
 
-export const WatchlistButton = styled.button`
+export const WatchlistButton = styled.button<{ $active?: boolean }>`
   height: 44px;
   padding: 0 22px;
-  border: none;
+  border: 1px solid
+    ${({ $active, theme }) =>
+      $active ? theme.colors.border : 'transparent'};
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  background: ${({ $active, theme }) =>
+    $active ? theme.colors.surfaceElevated : theme.colors.primary};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.textPrimary : theme.colors.textInverse};
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: ${({ $active, theme }) =>
+      $active ? theme.colors.inputBackground : theme.colors.primaryHover};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
+    outline-offset: 2px;
+  }
 `
 
 export const TrailerButton = styled.button`
