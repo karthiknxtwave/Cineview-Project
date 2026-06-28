@@ -6,7 +6,7 @@ export const Backdrop = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.85);
+  background: ${({ theme }) => theme.colors.overlay};
   z-index: 200;
   padding: 24px;
 `
@@ -16,7 +16,7 @@ export const Content = styled.div`
   width: min(90vw, 900px);
   padding: 24px;
   border-radius: 16px;
-  background: #1e293b;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
 `
 
 export const CloseButton = styled.button`
@@ -27,14 +27,14 @@ export const CloseButton = styled.button`
   height: 36px;
   border: none;
   border-radius: 8px;
-  background: rgba(15, 23, 42, 0.6);
-  color: #f8fafc;
+  background: ${({ theme }) => theme.colors.overlay};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
 
   &:hover {
-    background: rgba(15, 23, 42, 0.9);
+    background: ${({ theme }) => theme.colors.surfaceMuted};
   }
 `
 
@@ -44,7 +44,7 @@ export const VideoWrapper = styled.div`
   aspect-ratio: 16 / 9;
   border-radius: 8px;
   overflow: hidden;
-  background: #0f172a;
+  background: ${({ theme }) => theme.colors.pageBackground};
 `
 
 export const YouTubeIframe = styled.iframe`
@@ -69,7 +69,7 @@ export const StateContainer = styled.div`
 export const StateMessage = styled.p`
   margin: 0;
   max-width: 360px;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
   font-size: 15px;
   line-height: 1.6;
 `
@@ -79,13 +79,13 @@ export const RetryButton = styled.button`
   padding: 0 20px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `

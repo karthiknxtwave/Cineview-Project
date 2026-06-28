@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { Navbar } from "../../../Common";
+import { usePreferencesController } from "../../../Preferences";
 import { SearchProvider } from "../../data/providers";
 import { useSearchController } from "../controllers/useSearchController";
 
@@ -9,6 +10,8 @@ const SearchNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { query, actions } = useSearchController();
+  const { language, supportedLanguages, setLanguage } =
+    usePreferencesController();
 
   const handleSearchChange = (value: string) => {
     actions.setQuery(value);
@@ -19,7 +22,13 @@ const SearchNavbar = () => {
   };
 
   return (
-    <Navbar searchValue={query} onSearchChange={handleSearchChange} />
+    <Navbar
+      searchValue={query}
+      onSearchChange={handleSearchChange}
+      selectedLanguage={language}
+      languageOptions={supportedLanguages}
+      onLanguageChange={value => setLanguage(value as typeof language)}
+    />
   );
 };
 

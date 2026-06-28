@@ -1,0 +1,30 @@
+{
+  "pageTitle": "Search",
+  "searchPlaceholder": "Search movies, TV shows, people...",
+  "searchAriaLabel": "Search query",
+  "recentSearches": "Recent Searches",
+  "clearRecent": "Clear",
+  "idleMessage": "Start typing to search the TMDB catalogue.",
+  "loadingMessage": "Searching for \"{{query}}\"...",
+  "errorTitle": "Something went wrong",
+  "errorMessage": "We couldn't load search results. Please try again.",
+  "retry": "Retry",
+  "emptyMessage": "No results found for \"{{query}}\".",
+  "sections": {
+    "movies": "Movies",
+    "tvShows": "TV Shows",
+    "people": "People"
+  },
+  "resultCard": {
+    "person": "Person",
+    "castAndCrew": "Cast & crew",
+    "rating": "★ {{rating}}",
+    "mediaType": {
+      "movie": "MOVIE",
+      "tv": "TV",
+      "person": "PERSON"
+    }
+  },
+  "resultCount_one": "{{count}} result",
+  "resultCount_other": "{{count}} results"
+}

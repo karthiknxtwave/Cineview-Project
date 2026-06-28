@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Page = styled.main`
   min-height: calc(100vh - 72px);
   padding: 32px 40px 48px;
-  background: #0f172a;
+  background: ${({ theme }) => theme.colors.pageBackground};
 `;
 
 export const Header = styled.header`
@@ -14,7 +14,7 @@ export const Title = styled.h1`
   margin: 0 0 16px;
   font-size: 32px;
   font-weight: 700;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const SearchInput = styled.input`
@@ -23,18 +23,19 @@ export const SearchInput = styled.input`
   height: 48px;
   padding: 0 18px;
   border-radius: 12px;
-  border: 1px solid #334155;
-  background: #1e293b;
-  color: #f8fafc;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 16px;
   outline: none;
 
   &::placeholder {
-    color: #94a3b8;
+    color: ${({ theme }) => theme.colors.textMuted};
   }
 
   &:focus {
-    border-color: #3b82f6;
+    border-color: ${({ theme }) => theme.colors.primaryActive};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.focusRing};
   }
 `;
 
@@ -54,7 +55,7 @@ export const SectionTitle = styled.h2`
   margin: 0 0 16px;
   font-size: 22px;
   font-weight: 700;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const ResultsGrid = styled.div`
@@ -70,30 +71,30 @@ export const RecentList = styled.div`
 `;
 
 export const RecentChip = styled.button`
-  border: 1px solid #334155;
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 999px;
   padding: 8px 14px;
-  background: #1e293b;
-  color: #e2e8f0;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 14px;
   cursor: pointer;
   transition: background 0.2s;
 
   &:hover {
-    background: #334155;
+    background: ${({ theme }) => theme.colors.surfaceMuted};
   }
 `;
 
 export const TextButton = styled.button`
   border: none;
   background: transparent;
-  color: #93c5fd;
+  color: ${({ theme }) => theme.colors.accent};
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    color: #bfdbfe;
+    color: ${({ theme }) => theme.colors.linkActive};
   }
 `;
 
@@ -101,21 +102,21 @@ export const StateMessage = styled.p`
   margin: 0;
   font-size: 16px;
   line-height: 1.6;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
 `;
 
 export const ErrorBox = styled.div`
   padding: 24px;
   border-radius: 12px;
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export const ErrorTitle = styled.h2`
   margin: 0 0 8px;
   font-size: 20px;
   font-weight: 600;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 export const ActionButton = styled.button`
@@ -124,13 +125,13 @@ export const ActionButton = styled.button`
   padding: 0 22px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `;

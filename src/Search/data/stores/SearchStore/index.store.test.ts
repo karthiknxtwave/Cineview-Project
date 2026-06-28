@@ -69,7 +69,7 @@ describe('SearchStore', () => {
     vi.advanceTimersByTime(SEARCH_DEBOUNCE_MS)
     await vi.runAllTimersAsync()
 
-    expect(search).toHaveBeenCalledWith('batman')
+    expect(search).toHaveBeenCalledWith('batman', expect.any(Object))
   })
 
   it('groups results by media type', async () => {

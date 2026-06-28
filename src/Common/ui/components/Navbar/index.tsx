@@ -4,18 +4,31 @@ import { useNavigate } from 'react-router-dom'
 import { clearSession } from '../../../core/utils/Session.utils'
 import * as S from './StyledComponents'
 
+interface LanguageOption {
+  code: string
+  label: string
+}
+
 interface NavbarProps {
   searchValue?: string
   onSearchChange?: (value: string) => void
   searchSlot?: ReactNode
+  selectedLanguage?: string
+  languageOptions?: readonly LanguageOption[]
+  onLanguageChange?: (language: string) => void
 }
 
 const Navbar = ({
   searchValue = '',
   onSearchChange,
   searchSlot,
+  selectedLanguage,
+  languageOptions = [],
+  onLanguageChange,
 }: NavbarProps) => {
   const navigate = useNavigate()
+  const isLanguageSwitcherEnabled =
+    Boolean(onLanguageChange) && languageOptions.length > 0
 
   const handleLogout = () => {
     clearSession()
@@ -48,8 +61,17 @@ const Navbar = ({
           />
         )}
 
-        <S.Language disabled>
-          <option>EN</option>
+        <S.Language
+          value={selectedLanguage ?? languageOptions[0]?.code ?? 'en'}
+          disabled={!isLanguageSwitcherEnabled}
+          onChange={event => onLanguageChange?.(event.target.value)}
+          aria-label="Language"
+        >
+          {languageOptions.map(option => (
+            <option key={option.code} value={option.code}>
+              {option.label}
+            </option>
+          ))}
         </S.Language>
 
         <S.Avatar>A</S.Avatar>

@@ -8,7 +8,7 @@ export const Title = styled.h2`
   margin: 0 0 14px;
   font-size: 18px;
   font-weight: 600;
-  color: #e2e8f0;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `
 
 export const ChipList = styled.div`
@@ -18,9 +18,13 @@ export const ChipList = styled.div`
 `
 
 export const Chip = styled.button<{ $active: boolean }>`
-  border: 1px solid ${({ $active }) => ($active ? '#3b82f6' : '#334155')};
-  background: ${({ $active }) => ($active ? '#1d4ed8' : '#1e293b')};
-  color: ${({ $active }) => ($active ? '#ffffff' : '#cbd5e1')};
+  border: 1px solid
+    ${({ $active, theme }) =>
+      $active ? theme.colors.primaryActive : theme.colors.border};
+  background: ${({ $active, theme }) =>
+    $active ? theme.colors.primaryHover : theme.colors.surfaceElevated};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.textInverse : theme.colors.textSecondary};
   padding: 8px 16px;
   border-radius: 999px;
   font-size: 14px;
@@ -29,8 +33,8 @@ export const Chip = styled.button<{ $active: boolean }>`
   transition: all 0.2s;
 
   &:hover {
-    border-color: #3b82f6;
-    color: white;
+    border-color: ${({ theme }) => theme.colors.primaryActive};
+    color: ${({ theme }) => theme.colors.textInverse};
   }
 `
 
@@ -38,7 +42,12 @@ export const SkeletonChip = styled.div`
   width: 88px;
   height: 36px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.colors.skeletonFrom} 25%,
+    ${({ theme }) => theme.colors.skeletonTo} 50%,
+    ${({ theme }) => theme.colors.skeletonFrom} 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 
@@ -55,13 +64,13 @@ export const SkeletonChip = styled.div`
 export const ErrorBox = styled.div`
   padding: 16px 20px;
   border-radius: 12px;
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `
 
 export const ErrorText = styled.p`
   margin: 0;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
   font-size: 14px;
 `
 
@@ -71,13 +80,13 @@ export const RetryButton = styled.button`
   padding: 0 16px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `

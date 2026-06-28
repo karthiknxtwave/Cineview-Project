@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useObserver } from "mobx-react-lite";
 
-import { ErrorBoundary, IMAGE } from "../../../Common";
+import { ErrorBoundary, IMAGE, type TmdbLocaleParams } from "../../../Common";
+import { usePreferenceChangeEffect } from "../../../Preferences";
 import { TVShowDetailStoreProvider, useTVShowDetailStore } from "../../data/providers";
 import * as S from "./StyledComponents";
 
@@ -31,6 +32,26 @@ const TVShowDetailContent = () => {
 
     void actions.fetchShowDetails(showId);
   }, [actions, showId]);
+
+  const handleLocaleChange = useCallback(() => {
+    if (!Number.isFinite(showId)) {
+      return;
+    }
+
+    void actions.fetchShowDetails(showId);
+  }, [actions, showId]);
+
+  const syncStoreLocale = useCallback(
+    (locale: TmdbLocaleParams) => {
+      store.setTmdbLocale(locale.language, locale.region);
+    },
+    [store],
+  );
+
+  usePreferenceChangeEffect({
+    onLocaleChange: handleLocaleChange,
+    syncStoreLocale,
+  });
 
   if (!Number.isFinite(showId)) {
     return (

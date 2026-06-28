@@ -9,7 +9,7 @@ export const Title = styled.h2`
   padding: 0 40px;
   font-size: 22px;
   font-weight: 700;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `
 
 export const Row = styled.div`
@@ -18,29 +18,24 @@ export const Row = styled.div`
   overflow-x: auto;
   padding: 4px 40px 12px;
   scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
-    height: 6px;
+    display: none;
   }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 999px;
-  }
-
-  scrollbar-width: thin;
-  scrollbar-color: #334155 transparent;
 `
 
 export const SkeletonCard = styled.div`
   flex: 0 0 160px;
   height: 240px;
   border-radius: 12px;
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.colors.skeletonFrom} 25%,
+    ${({ theme }) => theme.colors.skeletonTo} 50%,
+    ${({ theme }) => theme.colors.skeletonFrom} 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 
@@ -58,21 +53,21 @@ export const ErrorBox = styled.div`
   margin: 0 40px;
   padding: 20px 24px;
   border-radius: 12px;
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `
 
 export const EmptyBox = styled.div`
   margin: 0 40px;
   padding: 16px 24px;
   border-radius: 12px;
-  background: #1e293b;
-  border: 1px dashed #334155;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
+  border: 1px dashed ${({ theme }) => theme.colors.border};
 `
 
 export const ErrorText = styled.p`
   margin: 0;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
   font-size: 14px;
 `
 
@@ -82,13 +77,13 @@ export const RetryButton = styled.button`
   padding: 0 16px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `

@@ -1,0 +1,42 @@
+{
+  "rows": {
+    "trending": "Trending Now",
+    "popular": "Popular",
+    "topRated": "Top Rated",
+    "upcoming": "Upcoming"
+  },
+  "hero": {
+    "featured": "Featured",
+    "viewDetails": "View Details",
+    "watchTrailer": "Watch Trailer",
+    "rating": "★ {{rating}}"
+  },
+  "genreFilter": {
+    "title": "Browse by Genre",
+    "all": "All",
+    "loadError": "Couldn't load genres.",
+    "retry": "Retry"
+  },
+  "contentRow": {
+    "loadError": "Couldn't load this row.",
+    "filteredEmpty": "No movies match this genre in this row.",
+    "retry": "Retry"
+  },
+  "trailerModal": {
+    "loading": "Loading trailer…",
+    "loadError": "Couldn't load the trailer.",
+    "unavailable": "No trailer is available for this movie.",
+    "retry": "Retry",
+    "closeLabel": "Close trailer",
+    "iframeTitle": "Movie trailer"
+  },
+  "states": {
+    "errorTitle": "Something went wrong",
+    "errorMessage": "We couldn't load movies right now. Please try again.",
+    "retry": "Retry",
+    "emptyTitle": "No movies found",
+    "emptyFilteredMessage": "Try selecting a different genre or clear the filter.",
+    "emptyDefaultMessage": "There are no movies to show at the moment.",
+    "clearFilter": "Clear Filter"
+  }
+}

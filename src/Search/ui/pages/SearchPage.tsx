@@ -1,9 +1,16 @@
-import { ErrorBoundary } from "../../../Common";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+
+import { ErrorBoundary, type TmdbLocaleParams } from "../../../Common";
+import { usePreferenceChangeEffect } from "../../../Preferences";
 import { SearchResultCard } from "../components/SearchResultCard/index.tsx";
 import { useSearchController } from "../controllers/useSearchController";
+import { useSearchStore } from "../../data/providers";
 import * as S from "./StyledComponents";
 
 const SearchPageContent = () => {
+  const { t } = useTranslation("search");
+  const store = useSearchStore();
   const {
     query,
     movieResults,
@@ -21,25 +28,43 @@ const SearchPageContent = () => {
   const showRecent =
     !query.trim() && recentSearches.length > 0 && fetchStatus === "idle";
 
+  const handleLocaleChange = useCallback(() => {
+    if (query.trim()) {
+      void actions.search();
+    }
+  }, [actions, query]);
+
+  const syncStoreLocale = useCallback(
+    (locale: TmdbLocaleParams) => {
+      store.setTmdbLocale(locale.language, locale.region);
+    },
+    [store],
+  );
+
+  usePreferenceChangeEffect({
+    onLocaleChange: handleLocaleChange,
+    syncStoreLocale,
+  });
+
   return (
     <S.Page>
       <S.Header>
-        <S.Title>Search</S.Title>
+        <S.Title>{t("pageTitle")}</S.Title>
         <S.SearchInput
           type="search"
-          placeholder="Search movies, TV shows, people..."
+          placeholder={t("searchPlaceholder")}
           value={query}
           onChange={event => actions.setQuery(event.target.value)}
-          aria-label="Search query"
+          aria-label={t("searchAriaLabel")}
         />
       </S.Header>
 
       {showRecent && (
         <S.Section>
           <S.SectionHeader>
-            <S.SectionTitle>Recent Searches</S.SectionTitle>
+            <S.SectionTitle>{t("recentSearches")}</S.SectionTitle>
             <S.TextButton type="button" onClick={actions.clearRecentSearches}>
-              Clear
+              {t("clearRecent")}
             </S.TextButton>
           </S.SectionHeader>
           <S.RecentList>
@@ -57,39 +82,36 @@ const SearchPageContent = () => {
       )}
 
       {!query.trim() && !showRecent && (
-        <S.StateMessage>
-          Start typing to search the TMDB catalogue.
-        </S.StateMessage>
+        <S.StateMessage>{t("idleMessage")}</S.StateMessage>
       )}
 
       {loading && (
-        <S.StateMessage>Searching for &ldquo;{query}&rdquo;...</S.StateMessage>
+        <S.StateMessage>{t("loadingMessage", { query })}</S.StateMessage>
       )}
 
       {error && (
         <S.ErrorBox>
-          <S.ErrorTitle>Something went wrong</S.ErrorTitle>
-          <S.StateMessage>
-            We couldn&apos;t load search results. Please try again.
-          </S.StateMessage>
+          <S.ErrorTitle>{t("errorTitle")}</S.ErrorTitle>
+          <S.StateMessage>{t("errorMessage")}</S.StateMessage>
           <S.ActionButton type="button" onClick={() => void actions.search()}>
-            Retry
+            {t("retry")}
           </S.ActionButton>
         </S.ErrorBox>
       )}
 
       {isEmpty && (
-        <S.StateMessage>
-          No results found for &ldquo;{query}&rdquo;.
-        </S.StateMessage>
+        <S.StateMessage>{t("emptyMessage", { query })}</S.StateMessage>
       )}
 
       {hasResults && (
         <>
           {movieResults.length > 0 && (
-            <ErrorBoundary sectionName="Movies">
+            <ErrorBoundary sectionName={t("sections.movies")}>
               <S.Section>
-                <S.SectionTitle>Movies</S.SectionTitle>
+                <S.SectionTitle>
+                  {t("sections.movies")} ·{" "}
+                  {t("resultCount", { count: movieResults.length })}
+                </S.SectionTitle>
                 <S.ResultsGrid>
                   {movieResults.map(result => (
                     <SearchResultCard key={`movie-${result.id}`} result={result} />
@@ -100,9 +122,12 @@ const SearchPageContent = () => {
           )}
 
           {tvResults.length > 0 && (
-            <ErrorBoundary sectionName="TV Shows">
+            <ErrorBoundary sectionName={t("sections.tvShows")}>
               <S.Section>
-                <S.SectionTitle>TV Shows</S.SectionTitle>
+                <S.SectionTitle>
+                  {t("sections.tvShows")} ·{" "}
+                  {t("resultCount", { count: tvResults.length })}
+                </S.SectionTitle>
                 <S.ResultsGrid>
                   {tvResults.map(result => (
                     <SearchResultCard key={`tv-${result.id}`} result={result} />
@@ -113,9 +138,12 @@ const SearchPageContent = () => {
           )}
 
           {personResults.length > 0 && (
-            <ErrorBoundary sectionName="People">
+            <ErrorBoundary sectionName={t("sections.people")}>
               <S.Section>
-                <S.SectionTitle>People</S.SectionTitle>
+                <S.SectionTitle>
+                  {t("sections.people")} ·{" "}
+                  {t("resultCount", { count: personResults.length })}
+                </S.SectionTitle>
                 <S.ResultsGrid>
                   {personResults.map(result => (
                     <SearchResultCard

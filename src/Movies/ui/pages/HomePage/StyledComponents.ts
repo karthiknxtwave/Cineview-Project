@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Page = styled.main`
   min-height: calc(100vh - 72px);
-  background: #0f172a;
+  background: ${({ theme }) => theme.colors.pageBackground};
   padding-bottom: 48px;
 `
 
@@ -14,7 +14,7 @@ export const StateContainer = styled.div`
   justify-content: center;
   gap: 16px;
   padding: 40px;
-  background: #0f172a;
+  background: ${({ theme }) => theme.colors.pageBackground};
   text-align: center;
 `
 
@@ -22,7 +22,7 @@ export const StateTitle = styled.h2`
   margin: 0;
   font-size: 28px;
   font-weight: 700;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `
 
 export const StateMessage = styled.p`
@@ -30,7 +30,7 @@ export const StateMessage = styled.p`
   max-width: 420px;
   font-size: 16px;
   line-height: 1.6;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
 `
 
 export const ActionButton = styled.button`
@@ -39,14 +39,14 @@ export const ActionButton = styled.button`
   padding: 0 22px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `

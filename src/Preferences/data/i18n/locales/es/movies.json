@@ -1,0 +1,42 @@
+{
+  "rows": {
+    "trending": "Tendencias",
+    "popular": "Populares",
+    "topRated": "Mejor valoradas",
+    "upcoming": "Próximamente"
+  },
+  "hero": {
+    "featured": "Destacada",
+    "viewDetails": "Ver detalles",
+    "watchTrailer": "Ver tráiler",
+    "rating": "★ {{rating}}"
+  },
+  "genreFilter": {
+    "title": "Explorar por género",
+    "all": "Todas",
+    "loadError": "No se pudieron cargar los géneros.",
+    "retry": "Reintentar"
+  },
+  "contentRow": {
+    "loadError": "No se pudo cargar esta fila.",
+    "filteredEmpty": "Ninguna película coincide con este género en esta fila.",
+    "retry": "Reintentar"
+  },
+  "trailerModal": {
+    "loading": "Cargando tráiler…",
+    "loadError": "No se pudo cargar el tráiler.",
+    "unavailable": "No hay tráiler disponible para esta película.",
+    "retry": "Reintentar",
+    "closeLabel": "Cerrar tráiler",
+    "iframeTitle": "Tráiler de la película"
+  },
+  "states": {
+    "errorTitle": "Algo salió mal",
+    "errorMessage": "No pudimos cargar películas en este momento. Inténtalo de nuevo.",
+    "retry": "Reintentar",
+    "emptyTitle": "No se encontraron películas",
+    "emptyFilteredMessage": "Prueba otro género o borra el filtro.",
+    "emptyDefaultMessage": "No hay películas para mostrar en este momento.",
+    "clearFilter": "Borrar filtro"
+  }
+}

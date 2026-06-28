@@ -1,4 +1,10 @@
-import { ApiClient, API_ROUTES } from "../../../../Common";
+import {
+  ApiClient,
+  API_ROUTES,
+  DEFAULT_TMDB_LOCALE,
+  toTmdbQueryParams,
+} from "../../../../Common";
+import type { TmdbLocaleParams } from "../../../../Common/core/utils/TmdbParams.utils";
 
 import {
   MovieListResponseSchema,
@@ -11,69 +17,106 @@ import {
 import type { MoviesServiceInterface } from "./index";
 
 class MoviesService implements MoviesServiceInterface {
-  async getTrending() {
-    const response = await ApiClient.get(API_ROUTES.TRENDING);
+  async getTrending(locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE) {
+    const response = await ApiClient.get(
+      API_ROUTES.TRENDING,
+      toTmdbQueryParams(locale),
+    );
 
     return MovieListResponseSchema.parse(response).results;
   }
 
-  async getPopular() {
-    const response = await ApiClient.get(API_ROUTES.MOVIES.POPULAR);
+  async getPopular(locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE) {
+    const response = await ApiClient.get(
+      API_ROUTES.MOVIES.POPULAR,
+      toTmdbQueryParams(locale),
+    );
 
     return MovieListResponseSchema.parse(response).results;
   }
 
-  async getTopRated() {
-    const response = await ApiClient.get(API_ROUTES.MOVIES.TOP_RATED);
+  async getTopRated(locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE) {
+    const response = await ApiClient.get(
+      API_ROUTES.MOVIES.TOP_RATED,
+      toTmdbQueryParams(locale),
+    );
 
     return MovieListResponseSchema.parse(response).results;
   }
 
-  async getUpcoming() {
-    const response = await ApiClient.get(API_ROUTES.MOVIES.UPCOMING);
+  async getUpcoming(locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE) {
+    const response = await ApiClient.get(
+      API_ROUTES.MOVIES.UPCOMING,
+      toTmdbQueryParams(locale),
+    );
 
     return MovieListResponseSchema.parse(response).results;
   }
 
-  async getGenres() {
-    const response = await ApiClient.get(API_ROUTES.GENRES);
+  async getGenres(locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE) {
+    const response = await ApiClient.get(
+      API_ROUTES.GENRES,
+      toTmdbQueryParams(locale),
+    );
 
     return GenreListResponseSchema.parse(response);
   }
 
-  async getMovieDetails(movieId: number) {
+  async getMovieDetails(
+    movieId: number,
+    locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE,
+  ) {
     const response = await ApiClient.get(
       API_ROUTES.MOVIES.DETAILS(movieId),
+      toTmdbQueryParams(locale),
     );
 
     return MovieDetailsSchema.parse(response);
   }
 
-  async getCast(movieId: number) {
-    const response = await ApiClient.get(API_ROUTES.MOVIES.CAST(movieId));
+  async getCast(
+    movieId: number,
+    locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE,
+  ) {
+    const response = await ApiClient.get(
+      API_ROUTES.MOVIES.CAST(movieId),
+      toTmdbQueryParams(locale),
+    );
 
     return CastResponseSchema.parse(response);
   }
 
-  async getVideos(movieId: number) {
+  async getVideos(
+    movieId: number,
+    locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE,
+  ) {
     const response = await ApiClient.get(
       API_ROUTES.MOVIES.VIDEOS(movieId),
+      toTmdbQueryParams(locale),
     );
-  
+
     return VideosResponseSchema.parse(response);
   }
 
-  async getRecommendations(movieId: number) {
+  async getRecommendations(
+    movieId: number,
+    locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE,
+  ) {
     const response = await ApiClient.get(
       API_ROUTES.MOVIES.RECOMMENDATIONS(movieId),
+      toTmdbQueryParams(locale),
     );
 
     return MovieListResponseSchema.parse(response).results;
   }
 
-  async getSimilar(movieId: number) {
+  async getSimilar(
+    movieId: number,
+    locale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE,
+  ) {
     const response = await ApiClient.get(
       API_ROUTES.MOVIES.SIMILAR(movieId),
+      toTmdbQueryParams(locale),
     );
 
     return MovieListResponseSchema.parse(response).results;

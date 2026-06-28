@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { PreferencesStoreProvider } from '../../../Preferences/data/providers'
 import { SeasonDetailPage } from './SeasonDetailPage'
 
 vi.mock('../../data/services/TVShowsService', () => ({
@@ -30,14 +31,16 @@ describe('SeasonDetailPage', () => {
 
   it('renders episode list from fetched season data', async () => {
     render(
-      <MemoryRouter initialEntries={['/tv/1/season/1']}>
-        <Routes>
-          <Route
-            path="/tv/:id/season/:seasonNumber"
-            element={<SeasonDetailPage />}
-          />
-        </Routes>
-      </MemoryRouter>,
+      <PreferencesStoreProvider>
+        <MemoryRouter initialEntries={['/tv/1/season/1']}>
+          <Routes>
+            <Route
+              path="/tv/:id/season/:seasonNumber"
+              element={<SeasonDetailPage />}
+            />
+          </Routes>
+        </MemoryRouter>
+      </PreferencesStoreProvider>,
     )
 
     await waitFor(() => {

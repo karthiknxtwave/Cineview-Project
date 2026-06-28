@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { ErrorBoundary } from '../../../../Common'
-import { HomeStoreProvider } from '../../../data/providers'
+import { ErrorBoundary, type TmdbLocaleParams } from '../../../../Common'
+import { usePreferenceChangeEffect } from '../../../../Preferences'
+import { HomeStoreProvider, useHomeStore } from '../../../data/providers'
 import { ContentRow } from '../../components/ContentRow'
 import { GenreFilter } from '../../components/GenreFilter'
 import { HeroBanner } from '../../components/HeroBanner'
@@ -11,13 +13,15 @@ import { useTrailerModal } from '../../controllers/useTrailerModal'
 import * as S from './StyledComponents'
 
 const ROWS = [
-  { key: 'trending', title: 'Trending Now' },
-  { key: 'popular', title: 'Popular' },
-  { key: 'topRated', title: 'Top Rated' },
-  { key: 'upcoming', title: 'Upcoming' },
+  { key: 'trending', titleKey: 'rows.trending' },
+  { key: 'popular', titleKey: 'rows.popular' },
+  { key: 'topRated', titleKey: 'rows.topRated' },
+  { key: 'upcoming', titleKey: 'rows.upcoming' },
 ] as const
 
 const HomePageContent = () => {
+  const { t } = useTranslation('movies')
+  const store = useHomeStore()
   const {
     movies,
     rowStatus,
@@ -33,6 +37,22 @@ const HomePageContent = () => {
   } = useHomeController()
   const trailer = useTrailerModal()
 
+  const handleLocaleChange = useCallback(() => {
+    void actions.fetchHomeData()
+  }, [actions])
+
+  const syncStoreLocale = useCallback(
+    (locale: TmdbLocaleParams) => {
+      store.setTmdbLocale(locale.language, locale.region)
+    },
+    [store],
+  )
+
+  usePreferenceChangeEffect({
+    onLocaleChange: handleLocaleChange,
+    syncStoreLocale,
+  })
+
   useEffect(() => {
     void actions.fetchHomeData()
   }, [actions])
@@ -43,12 +63,10 @@ const HomePageContent = () => {
   if (error && !hasVisibleMovies && !loading) {
     return (
       <S.StateContainer>
-        <S.StateTitle>Something went wrong</S.StateTitle>
-        <S.StateMessage>
-          We couldn&apos;t load movies right now. Please try again.
-        </S.StateMessage>
+        <S.StateTitle>{t('states.errorTitle')}</S.StateTitle>
+        <S.StateMessage>{t('states.errorMessage')}</S.StateMessage>
         <S.ActionButton type="button" onClick={() => void actions.fetchHomeData()}>
-          Retry
+          {t('states.retry')}
         </S.ActionButton>
       </S.StateContainer>
     )
@@ -57,15 +75,15 @@ const HomePageContent = () => {
   if (!loading && !hasVisibleMovies && !hasFilteredEmptyRows) {
     return (
       <S.StateContainer>
-        <S.StateTitle>No movies found</S.StateTitle>
+        <S.StateTitle>{t('states.emptyTitle')}</S.StateTitle>
         <S.StateMessage>
           {selectedGenre !== null
-            ? 'Try selecting a different genre or clear the filter.'
-            : 'There are no movies to show at the moment.'}
+            ? t('states.emptyFilteredMessage')
+            : t('states.emptyDefaultMessage')}
         </S.StateMessage>
         {selectedGenre !== null && (
           <S.ActionButton type="button" onClick={() => actions.selectGenre(null)}>
-            Clear Filter
+            {t('states.clearFilter')}
           </S.ActionButton>
         )}
       </S.StateContainer>
@@ -100,11 +118,11 @@ const HomePageContent = () => {
       {ROWS.map(row => (
         <ErrorBoundary
           key={row.key}
-          sectionName={row.title}
+          sectionName={t(row.titleKey)}
           onRetry={() => void actions.fetchRow(row.key)}
         >
           <ContentRow
-            title={row.title}
+            title={t(row.titleKey)}
             movies={movies[row.key]}
             loading={rowStatus[row.key] === 'loading' && movies[row.key].length === 0}
             error={rowStatus[row.key] === 'error'}

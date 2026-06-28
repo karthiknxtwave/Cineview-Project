@@ -1,6 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import {
+  DEFAULT_TMDB_LOCALE,
+  type TmdbLocaleParams,
+} from '../../../../Common/core/utils/TmdbParams.utils'
+
+import {
   MoviesService,
   type MoviesServiceInterface,
 } from '../../services/MoviesService'
@@ -26,11 +31,17 @@ export class MovieDetailStore {
   videosStatus: FetchStatus = 'idle'
   trailerKey: string | null = null
 
+  private tmdbLocale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE
+
   private service: MoviesServiceInterface
 
   constructor(service: MoviesServiceInterface = MoviesService) {
     this.service = service
     makeAutoObservable(this)
+  }
+
+  setTmdbLocale(language: string, region: string) {
+    this.tmdbLocale = { language, region }
   }
 
   async fetchAll(movieId: number) {
@@ -46,7 +57,7 @@ export class MovieDetailStore {
     this.detailsStatus = 'loading'
 
     try {
-      const movie = await this.service.getMovieDetails(movieId)
+      const movie = await this.service.getMovieDetails(movieId, this.tmdbLocale)
 
       runInAction(() => {
         this.movie = movie
@@ -66,7 +77,7 @@ export class MovieDetailStore {
     this.castStatus = 'loading'
 
     try {
-      const castResponse = await this.service.getCast(movieId)
+      const castResponse = await this.service.getCast(movieId, this.tmdbLocale)
 
       runInAction(() => {
         this.cast = castResponse.cast
@@ -85,7 +96,7 @@ export class MovieDetailStore {
     this.similarStatus = 'loading'
 
     try {
-      const similarMovies = await this.service.getSimilar(movieId)
+      const similarMovies = await this.service.getSimilar(movieId, this.tmdbLocale)
 
       runInAction(() => {
         this.similarMovies = similarMovies
@@ -104,7 +115,10 @@ export class MovieDetailStore {
     this.recommendationsStatus = 'loading'
 
     try {
-      const recommendedMovies = await this.service.getRecommendations(movieId)
+      const recommendedMovies = await this.service.getRecommendations(
+        movieId,
+        this.tmdbLocale,
+      )
 
       runInAction(() => {
         this.recommendedMovies = recommendedMovies
@@ -123,7 +137,7 @@ export class MovieDetailStore {
     this.videosStatus = 'loading'
 
     try {
-      const videosResponse = await this.service.getVideos(movieId)
+      const videosResponse = await this.service.getVideos(movieId, this.tmdbLocale)
 
       runInAction(() => {
         this.trailerKey = getYouTubeTrailerKey(videosResponse.results)

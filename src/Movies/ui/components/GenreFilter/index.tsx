@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import type { Genre } from '../../../core/types/Movie.types'
 import * as S from './StyledComponents'
 
@@ -20,10 +22,12 @@ export const GenreFilter = ({
   error = false,
   onRetry,
 }: GenreFilterProps) => {
+  const { t } = useTranslation('movies')
+
   if (loading) {
     return (
       <S.Section>
-        <S.Title>Browse by Genre</S.Title>
+        <S.Title>{t('genreFilter.title')}</S.Title>
         <S.ChipList>
           {Array.from({ length: SKELETON_CHIP_COUNT }, (_, index) => (
             <S.SkeletonChip key={index} />
@@ -36,12 +40,12 @@ export const GenreFilter = ({
   if (error) {
     return (
       <S.Section>
-        <S.Title>Browse by Genre</S.Title>
+        <S.Title>{t('genreFilter.title')}</S.Title>
         <S.ErrorBox>
-          <S.ErrorText>Couldn&apos;t load genres.</S.ErrorText>
+          <S.ErrorText>{t('genreFilter.loadError')}</S.ErrorText>
           {onRetry && (
             <S.RetryButton type="button" onClick={onRetry}>
-              Retry
+              {t('genreFilter.retry')}
             </S.RetryButton>
           )}
         </S.ErrorBox>
@@ -51,14 +55,14 @@ export const GenreFilter = ({
 
   return (
     <S.Section>
-      <S.Title>Browse by Genre</S.Title>
+      <S.Title>{t('genreFilter.title')}</S.Title>
       <S.ChipList>
         <S.Chip
           type="button"
           $active={selectedGenre === null}
           onClick={() => onSelectGenre(null)}
         >
-          All
+          {t('genreFilter.all')}
         </S.Chip>
         {genres.map(genre => (
           <S.Chip

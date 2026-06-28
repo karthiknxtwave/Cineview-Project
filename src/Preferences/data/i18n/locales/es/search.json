@@ -1,0 +1,30 @@
+{
+  "pageTitle": "Buscar",
+  "searchPlaceholder": "Buscar películas, series y personas...",
+  "searchAriaLabel": "Consulta de búsqueda",
+  "recentSearches": "Búsquedas recientes",
+  "clearRecent": "Borrar",
+  "idleMessage": "Empieza a escribir para buscar en el catálogo de TMDB.",
+  "loadingMessage": "Buscando \"{{query}}\"...",
+  "errorTitle": "Algo salió mal",
+  "errorMessage": "No pudimos cargar los resultados de búsqueda. Inténtalo de nuevo.",
+  "retry": "Reintentar",
+  "emptyMessage": "No se encontraron resultados para \"{{query}}\".",
+  "sections": {
+    "movies": "Películas",
+    "tvShows": "Series",
+    "people": "Personas"
+  },
+  "resultCard": {
+    "person": "Persona",
+    "castAndCrew": "Reparto y equipo",
+    "rating": "★ {{rating}}",
+    "mediaType": {
+      "movie": "PELÍCULA",
+      "tv": "SERIE",
+      "person": "PERSONA"
+    }
+  },
+  "resultCount_one": "{{count}} resultado",
+  "resultCount_other": "{{count}} resultados"
+}

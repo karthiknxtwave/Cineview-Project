@@ -1,4 +1,6 @@
-import { IMAGE } from '../../../../Common'
+import { useTranslation } from 'react-i18next'
+
+import { formatDisplayYear, IMAGE } from '../../../../Common'
 import type { MovieSummary } from '../../../core/types/Movie.types'
 import * as S from './StyledComponents'
 
@@ -11,14 +13,13 @@ interface HeroBannerProps {
 const getBackdropUrl = (path: string | null) =>
   path ? `${IMAGE.ORIGINAL}${path}` : undefined
 
-const getReleaseYear = (releaseDate: string) =>
-  releaseDate ? releaseDate.slice(0, 4) : '—'
-
 export const HeroBanner = ({
   movie,
   loading = false,
   onTrailerClick,
 }: HeroBannerProps) => {
+  const { t, i18n } = useTranslation('movies')
+
   if (loading) {
     return (
       <S.Skeleton>
@@ -36,24 +37,25 @@ export const HeroBanner = ({
   }
 
   const backdropUrl = getBackdropUrl(movie.backdrop_path)
+  const releaseYear = formatDisplayYear(movie.release_date, i18n.language)
 
   return (
     <S.Banner $src={backdropUrl}>
       <S.Content>
-        <S.Eyebrow>Featured</S.Eyebrow>
+        <S.Eyebrow>{t('hero.featured')}</S.Eyebrow>
         <S.Title>{movie.title}</S.Title>
         <S.Meta>
-          {getReleaseYear(movie.release_date)} · ★ {movie.vote_average.toFixed(1)}
+          {releaseYear} · {t('hero.rating', { rating: movie.vote_average.toFixed(1) })}
         </S.Meta>
         <S.Overview>{movie.overview}</S.Overview>
         <S.Actions>
-          <S.Cta to={`/movie/${movie.id}`}>View Details</S.Cta>
+          <S.Cta to={`/movie/${movie.id}`}>{t('hero.viewDetails')}</S.Cta>
           <S.TrailerButton
             type="button"
             onClick={onTrailerClick}
             disabled={!onTrailerClick}
           >
-            Watch Trailer
+            {t('hero.watchTrailer')}
           </S.TrailerButton>
         </S.Actions>
       </S.Content>

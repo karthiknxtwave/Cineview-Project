@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const Nav = styled.nav`
   height: 72px;
-  background: #111827;
+  background: ${({ theme }) => theme.colors.surface};
 
   display: flex;
   justify-content: space-between;
@@ -11,7 +11,7 @@ export const Nav = styled.nav`
 
   padding: 0 40px;
 
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.surfaceMuted};
 
   position: sticky;
   top: 0;
@@ -21,7 +21,7 @@ export const Nav = styled.nav`
 export const Logo = styled.h1`
   margin: 0;
 
-  color: white;
+  color: ${({ theme }) => theme.colors.textPrimary};
 
   font-size: 28px;
 
@@ -42,7 +42,7 @@ export const NavLinks = styled.div`
 `
 
 export const StyledNavLink = styled(NavLink)`
-  color: #cbd5e1;
+  color: ${({ theme }) => theme.colors.link};
 
   text-decoration: none;
 
@@ -53,11 +53,11 @@ export const StyledNavLink = styled(NavLink)`
   transition: 0.2s;
 
   &:hover {
-    color: white;
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   &.active {
-    color: #3b82f6;
+    color: ${({ theme }) => theme.colors.linkActive};
   }
 `
 
@@ -74,18 +74,23 @@ export const SearchInput = styled.input`
 
   border-radius: 20px;
 
-  border: 1px solid #334155;
+  border: 1px solid ${({ theme }) => theme.colors.border};
 
-  background: #1e293b;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
 
-  color: white;
+  color: ${({ theme }) => theme.colors.textPrimary};
 
   padding: 0 16px;
 
   outline: none;
 
   &::placeholder {
-    color: #94a3b8;
+    color: ${({ theme }) => theme.colors.textMuted};
+  }
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.primaryActive};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.focusRing};
   }
 `
 
@@ -94,11 +99,11 @@ export const Language = styled.select`
 
   border-radius: 10px;
 
-  border: 1px solid #334155;
+  border: 1px solid ${({ theme }) => theme.colors.border};
 
-  background: #1e293b;
+  background: ${({ theme }) => theme.colors.surfaceElevated};
 
-  color: white;
+  color: ${({ theme }) => theme.colors.textPrimary};
 
   padding: 0 12px;
 `
@@ -109,13 +114,13 @@ export const Avatar = styled.div`
 
   border-radius: 50%;
 
-  background: #3b82f6;
+  background: ${({ theme }) => theme.colors.primaryActive};
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  color: white;
+  color: ${({ theme }) => theme.colors.textInverse};
 
   font-weight: bold;
 
@@ -131,9 +136,9 @@ export const LogoutButton = styled.button`
 
   border-radius: 10px;
 
-  background: #ef4444;
+  background: ${({ theme }) => theme.colors.danger};
 
-  color: white;
+  color: ${({ theme }) => theme.colors.textInverse};
 
   cursor: pointer;
 
@@ -142,6 +147,6 @@ export const LogoutButton = styled.button`
   transition: 0.2s;
 
   &:hover {
-    background: #dc2626;
+    background: ${({ theme }) => theme.colors.dangerHover};
   }
 `

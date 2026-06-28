@@ -10,6 +10,7 @@ Project Guidelines.md
 Project Specification.md
 Sample Planning Document.md
 Clean Code Guidelines.md
+docs/
 
 # Env overrides (keep .env.example tracked)
 .env.local

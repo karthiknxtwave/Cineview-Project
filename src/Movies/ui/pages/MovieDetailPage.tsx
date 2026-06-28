@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ErrorBoundary, IMAGE } from '../../../Common'
-import { MovieDetailStoreProvider } from '../../data/movieDetailProviders'
+import { ErrorBoundary, IMAGE, type TmdbLocaleParams } from '../../../Common'
+import { usePreferenceChangeEffect } from '../../../Preferences'
+import {
+  MovieDetailStoreProvider,
+  useMovieDetailStore,
+} from '../../data/movieDetailProviders'
 import { ContentRow } from '../components/ContentRow'
 import { TrailerModal } from '../components/TrailerModal'
 import { useMovieDetailController } from '../controllers/useMovieDetailController'
@@ -11,6 +15,7 @@ import * as S from './MovieDetailStyledComponents.ts'
 const MovieDetailPageContent = () => {
   const { id } = useParams()
   const movieId = Number(id)
+  const store = useMovieDetailStore()
   const [isTrailerOpen, setIsTrailerOpen] = useState(false)
   const {
     movie,
@@ -41,6 +46,26 @@ const MovieDetailPageContent = () => {
 
     void actions.fetchAll(movieId)
   }, [actions, movieId])
+
+  const handleLocaleChange = useCallback(() => {
+    if (!Number.isFinite(movieId)) {
+      return
+    }
+
+    void actions.fetchAll(movieId)
+  }, [actions, movieId])
+
+  const syncStoreLocale = useCallback(
+    (locale: TmdbLocaleParams) => {
+      store.setTmdbLocale(locale.language, locale.region)
+    },
+    [store],
+  )
+
+  usePreferenceChangeEffect({
+    onLocaleChange: handleLocaleChange,
+    syncStoreLocale,
+  })
 
   if (!Number.isFinite(movieId)) {
     return (

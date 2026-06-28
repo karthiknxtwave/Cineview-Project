@@ -1,0 +1,22 @@
+{
+  "pageTitle": "Ajustes",
+  "language": {
+    "title": "Idioma",
+    "description": "Actualiza el texto de Inicio y Buscar, y el idioma del contenido de TMDB."
+  },
+  "region": {
+    "title": "Región",
+    "description": "Controla la disponibilidad regional del contenido de TMDB."
+  },
+  "theme": {
+    "title": "Tema",
+    "description": "Cambia entre modo claro y oscuro.",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "account": {
+    "title": "Cuenta",
+    "description": "Cierra tu sesión de CineView.",
+    "logout": "Cerrar sesión"
+  }
+}

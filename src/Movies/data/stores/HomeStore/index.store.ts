@@ -1,6 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import {
+  DEFAULT_TMDB_LOCALE,
+  type TmdbLocaleParams,
+} from '../../../../Common/core/utils/TmdbParams.utils'
+
+import {
   MoviesService,
   type MoviesServiceInterface,
 } from '../../services/MoviesService'
@@ -26,11 +31,17 @@ export class HomeStore {
   upcomingStatus: FetchStatus = 'idle'
   genresStatus: FetchStatus = 'idle'
 
+  private tmdbLocale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE
+
   private service: MoviesServiceInterface
 
   constructor(service: MoviesServiceInterface = MoviesService) {
     this.service = service
     makeAutoObservable(this)
+  }
+
+  setTmdbLocale(language: string, region: string) {
+    this.tmdbLocale = { language, region }
   }
 
   async fetchHomeData() {
@@ -44,26 +55,34 @@ export class HomeStore {
   }
 
   async fetchTrending() {
-    await this.fetchRow('trending', () => this.service.getTrending())
+    await this.fetchRow('trending', () =>
+      this.service.getTrending(this.tmdbLocale),
+    )
   }
 
   async fetchPopular() {
-    await this.fetchRow('popular', () => this.service.getPopular())
+    await this.fetchRow('popular', () =>
+      this.service.getPopular(this.tmdbLocale),
+    )
   }
 
   async fetchTopRated() {
-    await this.fetchRow('topRated', () => this.service.getTopRated())
+    await this.fetchRow('topRated', () =>
+      this.service.getTopRated(this.tmdbLocale),
+    )
   }
 
   async fetchUpcoming() {
-    await this.fetchRow('upcoming', () => this.service.getUpcoming())
+    await this.fetchRow('upcoming', () =>
+      this.service.getUpcoming(this.tmdbLocale),
+    )
   }
 
   async fetchGenres() {
     this.genresStatus = 'loading'
 
     try {
-      const genresResponse = await this.service.getGenres()
+      const genresResponse = await this.service.getGenres(this.tmdbLocale)
 
       runInAction(() => {
         this.genres = genresResponse.genres

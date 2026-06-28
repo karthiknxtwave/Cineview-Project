@@ -1,0 +1,22 @@
+{
+  "pageTitle": "Settings",
+  "language": {
+    "title": "Language",
+    "description": "Updates UI text on Home and Search, and TMDB content language."
+  },
+  "region": {
+    "title": "Region",
+    "description": "Controls regional availability for TMDB content."
+  },
+  "theme": {
+    "title": "Theme",
+    "description": "Switch between light and dark mode.",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "account": {
+    "title": "Account",
+    "description": "Sign out of your CineView session.",
+    "logout": "Logout"
+  }
+}

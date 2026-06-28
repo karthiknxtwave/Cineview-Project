@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useObserver } from "mobx-react-lite";
 
-import { ErrorBoundary } from "../../../Common";
+import { ErrorBoundary, type TmdbLocaleParams } from "../../../Common";
+import { usePreferenceChangeEffect } from "../../../Preferences";
 import { SeasonDetailStoreProvider, useSeasonDetailStore } from "../../data/providers";
 import * as S from "./StyledComponents.ts";
 
@@ -32,6 +33,26 @@ const SeasonDetailContent = () => {
 
     void actions.fetchSeasonDetails(showId, seasonNum);
   }, [actions, showId, seasonNum]);
+
+  const handleLocaleChange = useCallback(() => {
+    if (!Number.isFinite(showId) || !Number.isFinite(seasonNum)) {
+      return;
+    }
+
+    void actions.fetchSeasonDetails(showId, seasonNum);
+  }, [actions, showId, seasonNum]);
+
+  const syncStoreLocale = useCallback(
+    (locale: TmdbLocaleParams) => {
+      store.setTmdbLocale(locale.language, locale.region);
+    },
+    [store],
+  );
+
+  usePreferenceChangeEffect({
+    onLocaleChange: handleLocaleChange,
+    syncStoreLocale,
+  });
 
   if (!Number.isFinite(showId) || !Number.isFinite(seasonNum)) {
     return null;

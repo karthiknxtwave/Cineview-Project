@@ -26,8 +26,9 @@ export const WatchlistButton = styled.button<{ $active: boolean }>`
   height: 32px;
   border: none;
   border-radius: 50%;
-  background: ${({ $active }) => ($active ? '#2563eb' : 'rgba(15, 23, 42, 0.85)')};
-  color: white;
+  background: ${({ $active, theme }) =>
+    $active ? theme.colors.primary : theme.colors.overlay};
+  color: ${({ theme }) => theme.colors.textInverse};
   font-size: 18px;
   font-weight: 700;
   line-height: 1;
@@ -35,7 +36,7 @@ export const WatchlistButton = styled.button<{ $active: boolean }>`
   transition: background 0.2s;
 
   &:hover {
-    background: #2563eb;
+    background: ${({ theme }) => theme.colors.primary};
   }
 `
 
@@ -44,18 +45,18 @@ export const Poster = styled.div<{ $src?: string }>`
   height: 240px;
   border-radius: 12px;
   overflow: hidden;
-  background: ${({ $src }) =>
+  background: ${({ $src, theme }) =>
     $src
       ? `url(${$src}) center / cover no-repeat`
-      : 'linear-gradient(135deg, #1e293b, #334155)'};
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      : `linear-gradient(135deg, ${theme.colors.heroGradientFrom}, ${theme.colors.skeletonTo})`};
+  box-shadow: ${({ theme }) => theme.colors.cardShadow};
 `
 
 export const Title = styled.h3`
   margin: 10px 0 4px;
   font-size: 14px;
   font-weight: 600;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -66,5 +67,5 @@ export const Title = styled.h3`
 export const Meta = styled.p`
   margin: 0;
   font-size: 13px;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
 `

@@ -24,18 +24,18 @@ export const Poster = styled.div<{ $src?: string }>`
   height: 240px;
   border-radius: 12px;
   overflow: hidden;
-  background: ${({ $src }) =>
+  background: ${({ $src, theme }) =>
     $src
       ? `url(${$src}) center / cover no-repeat`
-      : "linear-gradient(135deg, #1e293b, #334155)"};
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      : `linear-gradient(135deg, ${theme.colors.heroGradientFrom}, ${theme.colors.skeletonTo})`};
+  box-shadow: ${({ theme }) => theme.colors.cardShadow};
 `;
 
 export const Title = styled.h3`
   margin: 10px 0 4px;
   font-size: 14px;
   font-weight: 600;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -46,7 +46,7 @@ export const Title = styled.h3`
 export const Meta = styled.p`
   margin: 0;
   font-size: 13px;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
 `;
 
 export const Badge = styled.span<{
@@ -59,10 +59,10 @@ export const Badge = styled.span<{
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  color: white;
-  background: ${({ $type }) => {
+  color: ${({ theme }) => theme.colors.textInverse};
+  background: ${({ $type, theme }) => {
     if ($type === "movie") {
-      return "#2563eb";
+      return theme.colors.primary;
     }
 
     if ($type === "tv") {

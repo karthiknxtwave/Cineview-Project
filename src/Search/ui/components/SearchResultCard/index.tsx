@@ -1,4 +1,6 @@
-import { IMAGE } from "../../../../Common";
+import { useTranslation } from "react-i18next";
+
+import { formatDisplayYear, IMAGE } from "../../../../Common";
 import type { SearchResult } from "../../../core/types";
 import * as S from "./StyledComponents";
 
@@ -15,19 +17,6 @@ const getTitle = (result: SearchResult) => {
   }
 
   return result.media_type === "movie" ? result.title : result.name;
-};
-
-const getYear = (result: SearchResult) => {
-  if (result.media_type === "person") {
-    return "Person";
-  }
-
-  const date =
-    result.media_type === "movie"
-      ? result.release_date
-      : result.first_air_date;
-
-  return date ? date.slice(0, 4) : "—";
 };
 
 const getRoute = (result: SearchResult) => {
@@ -49,13 +38,22 @@ const getImagePath = (result: SearchResult) => {
 };
 
 export const SearchResultCard = ({ result }: SearchResultCardProps) => {
+  const { t, i18n } = useTranslation("search");
   const posterUrl = getPosterUrl(getImagePath(result));
   const title = getTitle(result);
   const route = getRoute(result);
+
   const meta =
     result.media_type === "person"
-      ? "Cast & crew"
-      : `${getYear(result)} · ★ ${result.vote_average.toFixed(1)}`;
+      ? t("resultCard.castAndCrew")
+      : `${formatDisplayYear(
+          (result.media_type === "movie"
+            ? result.release_date
+            : result.first_air_date) ?? "",
+          i18n.language,
+        )} · ${t("resultCard.rating", {
+          rating: result.vote_average.toFixed(1),
+        })}`;
 
   const content = (
     <>
@@ -63,7 +61,7 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
       <S.Title>{title}</S.Title>
       <S.Meta>{meta}</S.Meta>
       <S.Badge $type={result.media_type}>
-        {result.media_type.toUpperCase()}
+        {t(`resultCard.mediaType.${result.media_type}`)}
       </S.Badge>
     </>
   );

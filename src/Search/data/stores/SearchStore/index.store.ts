@@ -1,6 +1,11 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import {
+  DEFAULT_TMDB_LOCALE,
+  type TmdbLocaleParams,
+} from "../../../../Common/core/utils/TmdbParams.utils";
+
+import {
   searchService,
   SEARCH_DEBOUNCE_MS,
   type SearchServiceInterface,
@@ -24,6 +29,8 @@ export class SearchStore {
 
   fetchStatus: FetchStatus = "idle";
 
+  private tmdbLocale: TmdbLocaleParams = DEFAULT_TMDB_LOCALE;
+
   private searchRequestId = 0;
 
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -35,6 +42,10 @@ export class SearchStore {
     makeAutoObservable(this);
 
     this.loadRecentSearches();
+  }
+
+  setTmdbLocale(language: string, region: string) {
+    this.tmdbLocale = { language, region };
   }
 
   setQuery(query: string) {
@@ -77,7 +88,7 @@ export class SearchStore {
     this.fetchStatus = "loading";
 
     try {
-      const results = await this.service.search(trimmedQuery);
+      const results = await this.service.search(trimmedQuery, this.tmdbLocale);
 
       if (requestId !== this.searchRequestId) {
         return;

@@ -7,10 +7,10 @@ export const Banner = styled.section<{ $src?: string }>`
   display: flex;
   align-items: flex-end;
   padding: 48px 40px;
-  background: ${({ $src }) =>
+  background: ${({ $src, theme }) =>
     $src
-      ? `linear-gradient(to top, #0f172a 12%, rgba(15, 23, 42, 0.55) 55%, rgba(15, 23, 42, 0.25) 100%), url(${$src}) center / cover no-repeat`
-      : 'linear-gradient(135deg, #1e293b, #0f172a)'};
+      ? `linear-gradient(to top, ${theme.colors.heroGradientTo} 12%, ${theme.colors.overlay} 55%, transparent 100%), url(${$src}) center / cover no-repeat`
+      : `linear-gradient(135deg, ${theme.colors.heroGradientFrom}, ${theme.colors.heroGradientTo})`};
 `
 
 export const Content = styled.div`
@@ -25,7 +25,7 @@ export const Eyebrow = styled.p`
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #93c5fd;
+  color: ${({ theme }) => theme.colors.accent};
 `
 
 export const Title = styled.h1`
@@ -33,14 +33,14 @@ export const Title = styled.h1`
   font-size: 42px;
   font-weight: 800;
   line-height: 1.1;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
 `
 
 export const Overview = styled.p`
   margin: 0 0 20px;
   font-size: 16px;
   line-height: 1.6;
-  color: #cbd5e1;
+  color: ${({ theme }) => theme.colors.textSecondary};
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -50,7 +50,7 @@ export const Overview = styled.p`
 export const Meta = styled.p`
   margin: 0 0 20px;
   font-size: 14px;
-  color: #94a3b8;
+  color: ${({ theme }) => theme.colors.textMuted};
 `
 
 export const Cta = styled(Link)`
@@ -60,15 +60,15 @@ export const Cta = styled(Link)`
   height: 44px;
   padding: 0 22px;
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textInverse};
   text-decoration: none;
   font-size: 15px;
   font-weight: 600;
   transition: background 0.2s;
 
   &:hover {
-    background: #1d4ed8;
+    background: ${({ theme }) => theme.colors.primaryHover};
   }
 `
 
@@ -84,18 +84,18 @@ export const TrailerButton = styled.button`
   justify-content: center;
   height: 44px;
   padding: 0 22px;
-  border: 1px solid #64748b;
+  border: 1px solid ${({ theme }) => theme.colors.borderStrong};
   border-radius: 10px;
   background: transparent;
-  color: #f8fafc;
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #94a3b8;
+    background: ${({ theme }) => theme.colors.surfaceElevated};
+    border-color: ${({ theme }) => theme.colors.textMuted};
   }
 
   &:disabled {
@@ -111,14 +111,23 @@ export const Skeleton = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   gap: 14px;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.colors.heroGradientFrom},
+    ${({ theme }) => theme.colors.heroGradientTo}
+  );
 `
 
 export const SkeletonLine = styled.div<{ $width: string; $height?: string }>`
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height ?? '18px'};
   border-radius: 8px;
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(
+    90deg,
+    ${({ theme }) => theme.colors.skeletonFrom} 25%,
+    ${({ theme }) => theme.colors.skeletonTo} 50%,
+    ${({ theme }) => theme.colors.skeletonFrom} 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 

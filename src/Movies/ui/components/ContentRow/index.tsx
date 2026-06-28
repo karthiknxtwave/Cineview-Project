@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import type { MovieSummary } from '../../../core/types/Movie.types'
 import { MovieCard } from '../MovieCard'
 import * as S from './StyledComponents'
@@ -21,15 +23,17 @@ export const ContentRow = ({
   filteredEmpty = false,
   onRetry,
 }: ContentRowProps) => {
+  const { t } = useTranslation('movies')
+
   if (error) {
     return (
       <S.Section>
         <S.Title>{title}</S.Title>
         <S.ErrorBox>
-          <S.ErrorText>Couldn&apos;t load this row.</S.ErrorText>
+          <S.ErrorText>{t('contentRow.loadError')}</S.ErrorText>
           {onRetry && (
             <S.RetryButton type="button" onClick={onRetry}>
-              Retry
+              {t('contentRow.retry')}
             </S.RetryButton>
           )}
         </S.ErrorBox>
@@ -42,7 +46,7 @@ export const ContentRow = ({
       <S.Section>
         <S.Title>{title}</S.Title>
         <S.EmptyBox>
-          <S.ErrorText>No movies match this genre in this row.</S.ErrorText>
+          <S.ErrorText>{t('contentRow.filteredEmpty')}</S.ErrorText>
         </S.EmptyBox>
       </S.Section>
     )
